@@ -276,7 +276,7 @@
         </div>
         <div class="trustline">
           <span><i class="dot"></i>Any stack, any framework</span>
-          <span><i class="dot"></i>Post-quantum signed</span>
+          <span><i class="dot"></i>Post-quantum, crypto-agile</span>
           <span><i class="dot"></i>Verify in a single pass</span>
         </div>
       </div>
@@ -289,20 +289,19 @@
               <span class="who">Agent Identification Number</span>
               <span class="chip">● Certified</span>
             </div>
+            <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal);margin-bottom:7px">Build AIN · capability envelope</div>
             <div class="ain">
-              <span class="k">KMC</span>.<span class="t">CMP</span>.<span class="e">acme7f3a</span>.<span class="i">0001</span>.<span class="h">9a2f…c71b</span>
+              <span class="k">KMC</span>.<span class="t">BLD</span>.<span class="e">acme</span>.<span class="i">1.4.0</span>.<span class="h">9a2f…c71b</span>
             </div>
-            <div class="ain-legend">
-              <div><b>Root</b>MeshKor</div>
-              <div><b>Type</b>Company</div>
-              <div><b>Entity</b>Operator</div>
-              <div><b>Instance</b>Agent #</div>
-              <div><b>Real-ID</b>Hash</div>
+            <div style="font-family:var(--mono);font-size:10.5px;color:var(--muted-2);margin:13px 0 7px;display:flex;align-items:center;gap:8px"><span style="color:var(--violet)">↓&nbsp;⊆</span> deployment sealed as a provable subset</div>
+            <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--violet);margin-bottom:7px">Deployment AIN · this running instance</div>
+            <div class="ain">
+              <span class="k">KMC</span>.<span class="t">DPL</span>.<span class="e">acme</span>.<span class="i">0001</span>.<span class="h">4e91…8d3a</span>
             </div>
             <div class="cred-foot">
               <span class="stat">Origin&nbsp; <b class="ok">✓ authentic</b></span>
               <span class="stat">History&nbsp; <b class="ok">✓ intact</b></span>
-              <span class="stat">Manifest&nbsp; <b>read · query</b></span>
+              <span class="stat">Manifest&nbsp; <b class="ok">⊆ envelope</b></span>
             </div>
           </div>
         </div>
@@ -359,9 +358,9 @@
           <div class="kv"># business identifier + <span>domain-verified email</span></div>
         </div>
         <div class="card reveal" style="transition-delay:.06s">
-          <h3>Readable, unforgeable</h3>
-          <p>The AIN is structured like a UPC so it can be read and checked at a glance, sealed into a signed birth record so it cannot be forged, and it binds the real-world identity by hash rather than carrying personal data in the clear.</p>
-          <div class="kv"><span>KMC</span>.TYPE.ENTITY.INSTANCE.<span>REALID_HASH</span></div>
+          <h3>Two births, one lineage</h3>
+          <p>Every release gets a Build AIN that seals what the software may ever do; every running instance gets a Deployment AIN whose reach is a provable subset of it. Both read like a UPC, are sealed into signed birth records so they can't be forged, and bind the real-world identity by hash rather than in the clear.</p>
+          <div class="kv"><span>KMC.BLD</span>.entity.version&nbsp; ⊆ &nbsp;<span>KMC.DPL</span>.entity.instance</div>
         </div>
         <div class="card reveal" style="transition-delay:.12s">
           <h3>One authority</h3>

@@ -306,9 +306,25 @@
   <section>
     <div class="wrap">
       <div class="sec-head reveal">
+        <span class="label">Two births</span>
+        <h2>A build identity, and a deployment identity that can't exceed it.</h2>
+        <p>Identity comes in two tiers, and the relationship between them is the enforcement. A Build AIN is issued once per software release and seals the capability envelope: everything that version of the agent is ever allowed to do. A Deployment AIN is issued per running instance and seals a manifest that must be a provable subset of that envelope, along with its own storage, salt, retention, and anchoring. An instance can be narrower than its build, never wider.</p>
+      </div>
+      <div class="rows reveal">
+        <div class="row"><div class="rlabel">Build AIN</div><div class="rbody">Issued per release under <strong>KMC.BLD</strong>, bound to a specific build artifact by hash and to the vendor's enrolled key. It sets the outer limit of what any deployment of that software may do.</div></div>
+        <div class="row"><div class="rlabel">Deployment AIN</div><div class="rbody">Issued per running instance under <strong>KMC.DPL</strong>, deriving from a Build AIN. Its manifest is checked to be a <strong>provable subset</strong> of the build envelope at issuance, so an instance can never grant itself reach the build didn't already have.</div></div>
+        <div class="row"><div class="rlabel">Build-level recall</div><div class="rbody">Because every deployment traces back to its build, revoking a Build AIN <strong>recalls every instance</strong> derived from it at once. One action retires a bad release everywhere it is running.</div></div>
+        <div class="row"><div class="rlabel">People aren't agents</div><div class="rbody">A human principal is never minted as an AIN. Human authority is handled as a session-scoped delegation assertion, recorded as a salted hash, so a person can authorize an agent without becoming one.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sec-head reveal">
         <span class="label">The pedigree</span>
         <h2>One credential, verified cheaply, at scale.</h2>
-        <p>Four interdependent mechanisms keep verification cheap no matter how much history an agent accumulates, and none of them stands without the others.</p>
+        <p>Four interdependent mechanisms keep verification cheap no matter how much history an agent accumulates, and none of them stands without the others. Every birth and event is signed with post-quantum signatures, and the signing scheme is built to stay agile, so the primitive can be swapped as the standards evolve without reissuing what came before.</p>
       </div>
       <div class="flow reveal">
         <svg viewBox="0 0 900 200" role="img" aria-label="Diagram: a sealed birth record links to a chain of history events, summarized by a constant-size running head that FAST verification checks in one pass.">

@@ -308,15 +308,18 @@
       <div class="sec-head reveal">
         <span class="label">The AIN</span>
         <h2>A passport for agents, structured like a UPC.</h2>
-        <p>The Agent Identification Number is readable so it can be checked at a glance, sealed into a signed birth record so it can't be forged, and it binds the real-world identity by hash rather than carrying personal data in the clear.</p>
+        <p>The Agent Identification Number is readable so it can be checked at a glance, sealed into a signed birth record so it can't be forged, and it binds the real-world identity by hash rather than carrying personal data in the clear. It comes in two tiers: a Build AIN that seals what a release may do, and a Deployment AIN whose reach is a provable subset of it, explained in full under <a href="how-it-works.html" style="color:var(--teal)">how it works</a>.</p>
       </div>
       <div class="cred reveal" style="max-width:560px">
         <div class="cred-inner">
           <div class="cred-glow" aria-hidden="true"></div>
           <div class="cred-head"><span class="who">Agent Identification Number</span><span class="chip">&#9679; Certified</span></div>
-          <div class="ain"><span class="k">KMC</span>.<span class="t">CMP</span>.<span class="e">acme7f3a</span>.<span class="i">0001</span>.<span class="h">9a2f&hellip;c71b</span></div>
-          <div class="ain-legend"><div><b>Root</b>MeshKor</div><div><b>Type</b>Company</div><div><b>Entity</b>Operator</div><div><b>Instance</b>Agent #</div><div><b>Real-ID</b>Hash</div></div>
-          <div class="cred-foot"><span class="stat">Origin&nbsp; <b class="ok">&#10003; authentic</b></span><span class="stat">History&nbsp; <b class="ok">&#10003; intact</b></span><span class="stat">Manifest&nbsp; <b>read &middot; query</b></span></div>
+          <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal);margin-bottom:7px">Build AIN &middot; capability envelope</div>
+          <div class="ain"><span class="k">KMC</span>.<span class="t">BLD</span>.<span class="e">acme</span>.<span class="i">1.4.0</span>.<span class="h">9a2f&hellip;c71b</span></div>
+          <div style="font-family:var(--mono);font-size:10.5px;color:var(--muted-2);margin:13px 0 7px;display:flex;align-items:center;gap:8px"><span style="color:var(--violet)">&darr;&nbsp;&#8838;</span> deployment sealed as a provable subset</div>
+          <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--violet);margin-bottom:7px">Deployment AIN &middot; this running instance</div>
+          <div class="ain"><span class="k">KMC</span>.<span class="t">DPL</span>.<span class="e">acme</span>.<span class="i">0001</span>.<span class="h">4e91&hellip;8d3a</span></div>
+          <div class="cred-foot"><span class="stat">Origin&nbsp; <b class="ok">&#10003; authentic</b></span><span class="stat">History&nbsp; <b class="ok">&#10003; intact</b></span><span class="stat">Manifest&nbsp; <b class="ok">&#8838; envelope</b></span></div>
         </div>
       </div>
     </div>
