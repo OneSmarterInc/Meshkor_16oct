@@ -13,6 +13,14 @@ module.exports = function handler(req, res) {
     `data-endpoint="${origin}/api/waitlist"`
   );
 
+  // Make the existing form surface the backend's real response instead of a
+  // generic success/error message. This is injected at request time so the
+  // static main-page source remains untouched on the feature branch.
+  html = html.replace(
+    ".then(function(r){ if(r.ok){ done(); } else { msg.className='wl-msg err'; msg.textContent='// something went wrong — try again'; } })",
+    ".then(function(r){ return r.json().catch(function(){ return {}; }).then(function(data){ if(r.ok){ form.reset(); msg.className='wl-msg ok'; msg.textContent='// ' + (data.message || \"you're on the list — we'll be in touch.\"); } else { msg.className='wl-msg err'; msg.textContent='// ' + (data.message || 'something went wrong — try again'); } }); })"
+  );
+
   res.setHeader('Content-Type', 'text/html; charset=utf-8');
   res.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
   return res.status(200).send(html);
