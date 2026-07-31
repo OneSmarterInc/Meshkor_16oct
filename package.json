@@ -1,0 +1,9 @@
+{
+  "name": "meshkor-web",
+  "version": "1.0.0",
+  "private": true,
+  "description": "MeshKor marketing site and waitlist API",
+  "dependencies": {
+    "nodemailer": "^6.10.1"
+  }
+}
