@@ -160,6 +160,15 @@ module.exports = async function handler(req, res) {
   }
 
   try {
+    // Honeypot: the form ships a hidden "company" field that real users never see.
+    // A bot that fills it gets a friendly 200 but is never stored or emailed, so it
+    // can't distinguish being blocked from succeeding. Cheap defense against the
+    // scripted-signup / mail-relay abuse a public POST endpoint invites.
+    const honeypot = typeof req.body?.company === 'string' ? req.body.company.trim() : '';
+    if (honeypot) {
+      return json(res, 200, { ok: true, message: "You're on the MeshKor waitlist — check your inbox for confirmation." });
+    }
+
     const rawEmail = typeof req.body?.email === 'string' ? req.body.email : '';
     const email = rawEmail.trim().toLowerCase();
 

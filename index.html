@@ -530,9 +530,10 @@
         <span class="label" style="justify-content:center">Early access</span>
         <h2 style="margin-top:14px">Prove your agents are who they say they are.</h2>
         <p>MeshKor is in preview. Join the waitlist and we'll reach out as we open enrollment to the first builders.</p>
-        <!-- WAITLIST CAPTURE: paste your POST endpoint (e.g. a Formspree URL like https://formspree.io/f/xxxxxxx) into data-endpoint below. Until it's a real https URL the form validates and confirms but stores nothing. -->
-        <form class="wl" id="waitlist-form" data-endpoint="PASTE_YOUR_FORM_ENDPOINT_HERE" novalidate>
+        <!-- WAITLIST CAPTURE: posts same-origin to /api/waitlist (the Vercel function). A relative path works on every route (/, /index.html, deep links), so capture no longer depends on the /api/home rewrite. -->
+        <form class="wl" id="waitlist-form" data-endpoint="/api/waitlist" novalidate>
           <input type="email" id="wl-email" name="email" placeholder="you@company.com" autocomplete="email" aria-label="Work email" required />
+          <input type="text" id="wl-hp" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;opacity:0;pointer-events:none" />
           <button class="btn btn-primary" type="submit">Request access →</button>
         </form>
         <div class="wl-msg" id="wl-msg" role="status" aria-live="polite"></div>
@@ -598,6 +599,7 @@
     var form = document.getElementById('waitlist-form');
     var msg = document.getElementById('wl-msg');
     var input = document.getElementById('wl-email');
+    var hp = document.getElementById('wl-hp');
     function valid(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
     form.addEventListener('submit', function(e){
       e.preventDefault();
@@ -605,14 +607,19 @@
       msg.className = 'wl-msg';
       if(!valid(email)){ msg.classList.add('err'); msg.textContent = '// please enter a valid email'; input.focus(); return; }
       var endpoint = form.getAttribute('data-endpoint') || '';
-      var done = function(){ form.reset(); msg.classList.add('ok'); msg.textContent = "// you're on the list — we'll be in touch."; };
-      if(endpoint && /^https?:\/\//.test(endpoint)){
+      var done = function(text){ form.reset(); msg.className = 'wl-msg ok'; msg.textContent = '// ' + (text || "you're on the list — we'll be in touch."); };
+      // Accept a same-origin relative path ("/api/...") as well as an absolute URL,
+      // so the endpoint works no matter which route served the page.
+      if(endpoint && (endpoint.charAt(0) === '/' || /^https?:\/\//.test(endpoint))){
         msg.classList.add('ok'); msg.textContent = '// sending…';
-        fetch(endpoint, {method:'POST', headers:{'Accept':'application/json','Content-Type':'application/json'}, body: JSON.stringify({email: email})})
-          .then(function(r){ if(r.ok){ done(); } else { msg.className='wl-msg err'; msg.textContent='// something went wrong — try again'; } })
+        fetch(endpoint, {method:'POST', headers:{'Accept':'application/json','Content-Type':'application/json'}, body: JSON.stringify({email: email, company: hp ? hp.value : ''})})
+          .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(data){
+            if(r.ok){ done(data.message); }
+            else { msg.className = 'wl-msg err'; msg.textContent = '// ' + (data.message || 'something went wrong — try again'); }
+          }); })
           .catch(function(){ msg.className='wl-msg err'; msg.textContent='// network error — try again'; });
       } else {
-        done(); // preview mode: confirm without a backend
+        done(); // no endpoint configured: confirm without a backend
       }
     });
   })();
