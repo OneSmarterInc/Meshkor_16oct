@@ -13,14 +13,29 @@ function env(name) {
   return value;
 }
 
+function supabaseServerKey() {
+  const key = process.env.SUPABASE_SECRET_KEY || process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!key) {
+    throw new Error('Missing required environment variable: SUPABASE_SECRET_KEY (or legacy SUPABASE_SERVICE_ROLE_KEY)');
+  }
+  return key;
+}
+
 async function supabaseRequest(path, options = {}) {
   const url = `${env('SUPABASE_URL').replace(/\/$/, '')}/rest/v1/${path}`;
-  const key = env('SUPABASE_SERVICE_ROLE_KEY');
+  const key = supabaseServerKey();
+  const authHeaders = { apikey: key };
+
+  // Legacy service_role keys are JWTs and can be passed as Bearer tokens.
+  // Current sb_secret_* keys are opaque server keys and should use apikey only.
+  if (!key.startsWith('sb_secret_')) {
+    authHeaders.Authorization = `Bearer ${key}`;
+  }
+
   return fetch(url, {
     ...options,
     headers: {
-      apikey: key,
-      Authorization: `Bearer ${key}`,
+      ...authHeaders,
       'Content-Type': 'application/json',
       ...(options.headers || {}),
     },
