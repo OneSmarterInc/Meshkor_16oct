@@ -28,20 +28,22 @@ The table keeps these fields:
 - `email_last_attempt_at`
 - `created_at`
 
-RLS is enabled and there are no public policies. The API uses the service-role key server-side.
+RLS is enabled and there are no public policies. The Vercel API uses a server-side Supabase secret key, which bypasses RLS. The legacy service-role key is also supported as a fallback.
 
 ## 2. Add Vercel environment variables
 
 In the Vercel project, add these variables for the Preview deployment first:
 
 - `SUPABASE_URL`
-- `SUPABASE_SERVICE_ROLE_KEY`
+- `SUPABASE_SECRET_KEY` (recommended current server-side key)
 - `SMTP_HOST`
 - `SMTP_PORT` (`587` for STARTTLS or `465` for SSL)
 - `SMTP_USER=info@meshkor.com`
 - `SMTP_PASSWORD`
 - `SMTP_FROM=MeshKor <info@meshkor.com>`
 - `WAITLIST_ADMIN_EMAIL=info@meshkor.com`
+
+If your Supabase project only exposes legacy keys, `SUPABASE_SERVICE_ROLE_KEY` is supported instead of `SUPABASE_SECRET_KEY`.
 
 Do not commit real secrets to GitHub. `.env.example` contains placeholders only.
 
