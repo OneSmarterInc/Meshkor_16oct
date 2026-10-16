@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MeshKor Healthcare — Autonomous Claims, MRF &amp; Lien Intelligence</title>
+  <meta name="description" content="Zero-egress AI agents with cryptographic capability manifests for EDI 837/835 claims adjudication, CMS-9882-F MRF price transparency, and legal medical-lien valuation." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-base: #0a0c10;
+      --bg-surface: #0f131a;
+      --bg-elevated: #151b26;
+      --border-dim: #1e2636;
+      --text-main: #f0f4f8;
+      --text-muted: #9ba3b0;
+      --text-dim: #646e7e;
+      --emerald: #10b981;
+      --emerald-bright: #34d399;
+      --amber: #f59e0b;
+      --rose: #f43f5e;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background-color: var(--bg-base);
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 32px 32px;
+      color: var(--text-main);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* Top Nav */
+    header {
+      border-bottom: 1px solid var(--border-dim);
+      background: rgba(10, 12, 16, 0.88);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+    .nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      text-decoration: none;
+      color: #fff;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    .brand-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      background: var(--emerald);
+      box-shadow: 0 0 10px var(--emerald);
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      font-size: 0.875rem;
+    }
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .nav-links a:hover { color: #fff; }
+    .btn-primary {
+      background: var(--emerald);
+      color: #05140e;
+      font-weight: 600;
+      font-size: 0.85rem;
+      padding: 0.55rem 1.1rem;
+      border-radius: 6px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+    }
+    .btn-primary:hover { background: var(--emerald-bright); }
+
+    /* Hero */
+    .hero { padding: 4.5rem 0 3.5rem; border-bottom: 1px solid var(--border-dim); }
+    .pill-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1.25rem; }
+    .pill {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.25rem 0.65rem;
+      border-radius: 4px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      color: var(--emerald-bright);
+    }
+    h1 {
+      font-size: clamp(2rem, 4.2vw, 3.1rem);
+      line-height: 1.12;
+      letter-spacing: -0.03em;
+      margin: 0 0 1.25rem;
+      max-width: 880px;
+    }
+    .hero-sub {
+      font-size: 1.08rem;
+      color: var(--text-muted);
+      max-width: 780px;
+      margin: 0 0 2rem;
+    }
+    .kpi-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+    .kpi-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-dim);
+      border-radius: 6px;
+      padding: 1.1rem 1.25rem;
+    }
+    .kpi-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--emerald-bright);
+    }
+    .kpi-lbl { font-size: 0.8rem; color: var(--text-muted); margin-top: 0.2rem; }
+
+    /* Sections */
+    section { padding: 4rem 0; border-bottom: 1px solid var(--border-dim); }
+    .sec-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--emerald);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    h2 {
+      font-size: clamp(1.5rem, 2.8vw, 2.1rem);
+      letter-spacing: -0.02em;
+      margin: 0 0 0.75rem;
+    }
+    .sec-desc { color: var(--text-muted); max-width: 740px; margin: 0 0 2.25rem; }
+
+    /* 3 Agents Grid */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 1.25rem;
+    }
+    .card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-dim);
+      border-radius: 8px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .card h3 { margin: 0.4rem 0 0.6rem; font-size: 1.15rem; }
+    .card p { font-size: 0.9rem; color: var(--text-muted); margin: 0 0 1rem; }
+    .card ul { margin: 0; padding-left: 1.1rem; color: var(--text-muted); font-size: 0.85rem; }
+    .card li { margin-bottom: 0.45rem; }
+
+    /* Interactive Sandbox */
+    .sandbox-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-dim);
+      border-radius: 8px;
+      padding: 1.5rem;
+    }
+    @media (max-width: 860px) { .sandbox-wrap { grid-template-columns: 1fr; } }
+    .scenario-tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
+    .tab-btn {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-dim);
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      padding: 0.5rem 0.85rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .tab-btn.active {
+      background: rgba(16, 185, 129, 0.14);
+      border-color: var(--emerald);
+      color: #fff;
+    }
+    .code-box {
+      background: #07090d;
+      border: 1px solid var(--border-dim);
+      border-radius: 6px;
+      padding: 1rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      overflow-x: auto;
+      white-space: pre;
+      color: #cbd5e1;
+    }
+    .bench-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid #182030;
+      font-size: 0.85rem;
+    }
+    .bench-row.highlight {
+      color: var(--emerald-bright);
+      font-weight: 600;
+    }
+
+    /* Pricing Grid (For Google Startup Review & Enterprise Buyers) */
+    .price-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.65rem;
+      font-weight: 600;
+      color: #fff;
+      margin: 0.5rem 0;
+    }
+    footer {
+      padding: 3rem 0;
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--text-dim);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container nav-bar">
+      <a href="/" class="brand">
+        <span class="brand-dot"></span>
+        <span>MeshKor</span>
+        <span class="mono" style="font-size: 0.75rem; color: var(--text-dim);">/ HEALTHCARE</span>
+      </a>
+      <nav class="nav-links">
+        <a href="/">&larr; Core Protocol</a>
+        <a href="#agents">Audited Agents</a>
+        <a href="#sandbox">837 &amp; MRF Sandbox</a>
+        <a href="#gcp-stack">Cloud Architecture</a>
+        <a href="#pricing">Platform Tiers</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="pill-row">
+        <span class="pill">AIN Rung 03 Concept Demo</span>
+        <span class="pill">CMS-9882-F Payer MRF + Hospital 835</span>
+        <span class="pill">Zero-Egress VPC &amp; Edge Appliance</span>
+      </div>
+      <h1>Autonomous claims &amp; price-transparency intelligence that never leaves your perimeter.</h1>
+      <p class="hero-sub">
+        MeshKor deploys cryptographically sandboxed AI agents inside your Google Cloud VPC or on-premise claims environment—pre-loaded with quarterly federal Payer MRFs, Hospital EDI 835 allowed-amount floors, UCR percentiles, and CMS Medicare/NCCI baselines.
+      </p>
+      <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+        <a href="#sandbox" class="btn-primary">Explore EDI 837 &amp; Lien Demo &darr;</a>
+        <a href="mailto:founders@meshkor.ai?subject=MeshKor%20Healthcare%20Pilot" style="color: var(--text-main); border: 1px solid var(--border-dim); padding: 0.55rem 1.1rem; border-radius: 6px; text-decoration: none; font-size: 0.85rem;">Request TPA or Legal Pilot</a>
+      </div>
+
+      <div class="kpi-strip">
+        <div class="kpi-box">
+          <div class="kpi-val">Target: &lt; 2 ms</div>
+          <div class="kpi-lbl">Inline EDI 837 / NPI + CPT lookup latency</div>
+        </div>
+        <div class="kpi-box">
+          <div class="kpi-val">Zero-egress design</div>
+          <div class="kpi-lbl">Outbound PHI egress (Manifest-locked)</div>
+        </div>
+        <div class="kpi-box">
+          <div class="kpi-val">6 Benchmarks</div>
+          <div class="kpi-lbl">Billed · UCR · Payer MRF · 835 Floor · QPA · CMS</div>
+        </div>
+        <div class="kpi-box">
+          <div class="kpi-val">100% Flat</div>
+          <div class="kpi-lbl">Proposed SaaS / VPC subscription model</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THREE AUDITED AGENTS -->
+  <section id="agents">
+    <div class="container">
+      <span class="sec-tag">01 // Rung 03 Audited Agents</span>
+      <h2>Three verifiable agents. One federal pricing &amp; coding core.</h2>
+      <p class="sec-desc">
+        The proposed MeshKor Healthcare agents would carry a permanent Agent Identification Number (<code>AIN</code>) and executes inside a deterministic Runtime Sandbox bound to our ghost-scrubbed CMS + MRF columnar engine.
+      </p>
+
+      <div class="grid-3">
+        <div class="card">
+          <div>
+            <span class="mono" style="font-size:0.75rem; color:var(--emerald);">AIN-HC-01 // TPAs, ASOs &amp; PLANS</span>
+            <h3>Pre-Pay 837 Sanity &amp; UCR Repricer</h3>
+            <p>Intercepts overpriced leased-PPO and out-of-network claims between <code>EDI 837</code> intake and <code>EDI 835</code> check-run release.</p>
+            <ul>
+              <li>Flags rental-network claims exceeding <code>220% of CMS Medicare</code> &amp; <code>130% of Hospital 835 Median</code>.</li>
+              <li>Replaces chargemaster UCR tables with market-cleared commercial allowed percentiles.</li>
+              <li>Auto-generates quarterly CMS-9882-F Utilization, Taxonomy, and 11-Claim OON files.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div>
+            <span class="mono" style="font-size:0.75rem; color:var(--emerald);">AIN-HC-02 // CODING &amp; NSA ARBITRATION</span>
+            <h3>Clinical NCCI &amp; IDR Defense Agent</h3>
+            <p>Pairs deterministic CMS NCCI / MUE edit tables with a sandboxed medical LLM on Google Cloud Run GPUs &amp; Vertex AI.</p>
+            <ul>
+              <li>Sub-2ms verification of NCCI Procedure-to-Procedure bundling and modifier rules.</li>
+              <li>Reads operative reports &amp; EOB CARC/RARC denials locally to draft clinical appeals.</li>
+              <li>Computes ghost-scrubbed specialist medians (QPA) for No Surprises Act IDR wins.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div>
+            <span class="mono" style="font-size:0.75rem; color:var(--emerald);">AIN-HC-03 // PERSONAL INJURY &amp; DEFENSE LAW</span>
+            <h3>Statutory Lien &amp; Reasonable-Value Auditor</h3>
+            <p>Turns itemized UB-04 (<code>837I</code>), CMS-1500 (<code>837P</code>), and Life Care Plans into court-ready evidentiary dossiers in 60 seconds.</p>
+            <ul>
+              <li>Exposes the spread between Hospital Statutory Liens and CEO-attested EDI 835 10th-percentile commercial floors.</li>
+              <li>Integrates CMS HCRIS Hospital Cost-to-Charge Ratios (CCR) by department.</li>
+              <li>Stamped with cryptographic <code>AIN</code> provenance for Rule 26 &amp; settlement negotiations.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE SANDBOX -->
+  <section id="sandbox">
+    <div class="container"><p role="status" style="border:1px solid #b45309;color:#fbbf24;padding:0.8rem;border-radius:6px;font-size:.9rem;">Interactive demonstration using illustrative synthetic claims and benchmark figures. This page does not process real EDI claims, query a live pricing database, or verify external data.</p></div>
+    <div class="container">
+      <span class="sec-tag">02 // Interactive Verification Sandbox</span>
+      <h2>Inspect the Capability Manifest &amp; live claim evaluation.</h2>
+      <p class="sec-desc">
+        Select a real-world claim or hospital lien scenario below to inspect how the MeshKor Runtime Sandbox evaluates the rate against federal MRF + CMS tables while enforcing a zero-egress security boundary.
+      </p>
+
+      <div class="scenario-tabs">
+        <button class="tab-btn active" onclick="loadScenario(0, this)">Scenario 1: Bloated Leased-PPO HOPD Claim (837I)</button>
+        <button class="tab-btn" onclick="loadScenario(1, this)">Scenario 2: Out-of-Network Hip Replacement (DRG 470)</button>
+        <button class="tab-btn" onclick="loadScenario(2, this)">Scenario 3: Personal Injury Hospital Trauma Lien</button>
+      </div>
+
+      <div class="sandbox-wrap">
+        <div>
+          <div class="mono" style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+            SEALED CAPABILITY MANIFEST &amp; X12 INPUT
+          </div>
+          <div class="code-box" id="manifest-box"></div>
+        </div>
+
+        <div>
+          <div class="mono" style="font-size: 0.75rem; color: var(--emerald); margin-bottom: 0.5rem;">
+            ILLUSTRATIVE BENCHMARK OUTPUT — DEMO DATA
+          </div>
+          <div id="benchmark-output" style="background:#07090d; border:1px solid var(--border-dim); border-radius:6px; padding:1.1rem;"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GOOGLE CLOUD & AI STACK -->
+  <section id="gcp-stack">
+    <div class="container">
+      <span class="sec-tag">03 // Cloud &amp; AI Infrastructure</span>
+      <h2>Built on Google Cloud Confidential Compute, AlloyDB &amp; Vertex AI.</h2>
+      <p class="sec-desc">
+        MeshKor processes multi-terabyte federal transparency datasets in our central non-PHI lakehouse while deploying isolated, single-tenant runtime sandboxes in <code>us-east5</code> (Columbus) or on-premise hardware.
+      </p>
+
+      <div class="grid-3">
+        <div class="card">
+          <span class="mono" style="font-size:0.75rem; color:var(--emerald);">LAKEHOUSE &amp; STREAMING ETL</span>
+          <h3>Google Cloud Storage &amp; BigQuery</h3>
+          <p>High-throughput streaming parsers ingest quarterly CMS-9882-F Payer MRFs, Hospital 835 files, and CMS NPPES/Medicare datasets into ZSTD-compressed Apache Parquet on Google Cloud Storage and BigQuery.</p>
+        </div>
+        <div class="card">
+          <span class="mono" style="font-size:0.75rem; color:var(--emerald);">SUB-2MS OLTP + OLAP ENGINE</span>
+          <h3>AlloyDB for PostgreSQL &amp; DuckDB</h3>
+          <p>Combines B-Tree indexed point lookups for real-time <code>EDI 837</code> claim lines with vectorized columnar percentile aggregations across hundreds of millions of regional contracted rates.</p>
+        </div>
+        <div class="card">
+          <span class="mono" style="font-size:0.75rem; color:var(--emerald);">SANDBOXED MEDICAL AI</span>
+          <h3>Vertex AI (Gemini 2.5) &amp; Cloud Run GPUs</h3>
+          <p>Executes clinical NCCI coding audits, operative-note synthesis, and legal lien evidentiary narratives inside Google Cloud VPC Service Controls and Confidential VMs under a federal HIPAA BAA.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING TIERS -->
+  <section id="pricing">
+    <div class="container">
+      <span class="sec-tag">04 // Illustrative Commercial Licensing</span>
+      <h2>Predictable software &amp; appliance licensing.</h2>
+      <p class="sec-desc">
+        Illustrative pricing; confirm terms with MeshKor. Deploy as a dedicated Google Cloud VPC instance or an air-gapped on-premise appliance.
+      </p>
+
+      <div class="grid-3">
+        <div class="card">
+          <div>
+            <span class="mono" style="font-size:0.75rem; color:var(--text-muted);">LEGAL &amp; PROVIDER TIER</span>
+            <h3>Litigation &amp; Contract Intelligence</h3>
+            <div class="price-tag">$495 <span style="font-size:0.85rem; color:var(--text-muted); font-weight:400;">/ case or $2,500/mo</span></div>
+            <p>For Personal Injury firms, Insurance Defense counsel, and Specialty Physician Groups.</p>
+            <ul>
+              <li>Instant 6-tier Hospital Lien &amp; LOP Reasonable-Value Dossiers.</li>
+              <li>Life Care Plan (Future Medical) MRF + Medicare repricing.</li>
+              <li>Top-40 CPT commercial payer contract parity benchmarks.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card" style="border-color: var(--emerald);">
+          <div>
+            <span class="mono" style="font-size:0.75rem; color:var(--emerald);">TPA &amp; ASO GROWTH TIER</span>
+            <h3>Dedicated VPC / Edge Appliance</h3>
+            <div class="price-tag">$4,500 <span style="font-size:0.85rem; color:var(--text-muted); font-weight:400;">/ month flat</span></div>
+            <p>Full inline <code>EDI 837</code>/<code>835</code> pre-pay sanity engine and market-cleared UCR replacement.</p>
+            <ul>
+              <li>Zero-egress Runtime Sandbox inside your LAN or GCP VPC.</li>
+              <li>Unlimited inline <code>837</code> pre-pay price edits &amp; OON safe-harbor repricing.</li>
+              <li>Quarterly CMS-9882-F Utilization, Taxonomy &amp; OON file generator.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card">
+          <div>
+            <span class="mono" style="font-size:0.75rem; color:var(--text-muted);">ENTERPRISE HEALTH PLAN</span>
+            <h3>National 50-State Cluster</h3>
+            <div class="price-tag">Custom <span style="font-size:0.85rem; color:var(--text-muted); font-weight:400;">PEPM / Enterprise</span></div>
+            <p>Multi-region AlloyDB &amp; Vertex AI cluster with custom core-admin EDI integration.</p>
+            <ul>
+              <li>Full 50-state Payer TiC MRF + Hospital 835 historical time-travel archive.</li>
+              <li>Dedicated NVIDIA L4 / A100 GPU cluster for clinical appeal automation.</li>
+              <li>24/7 SLA &amp; dedicated solutions engineering.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      MeshKor Inc. &middot; Delaware &amp; Ohio &middot; The Trust Authority for AI Agents &middot; <a href="/" style="color:var(--emerald); text-decoration:none;">meshkor.ai</a>
+    </div>
+  </footer>
+
+  <script>
+    const SCENARIOS = [
+      {
+        manifest: `{
+  "ain": "AIN-2026-HC-837-REPRICER",
+  "assurance_rung": "03_AUDITED",
+  "network_egress": "DENY_ALL_WAN_0.0.0.0/0",
+  "x12_claim_input": {
+    "loop_2010AA_npi": "1487654321 (Regional Hospital HOPD)",
+    "loop_2400_sv2": "CPT 29881 (Knee Arthroscopy, POS 22)",
+    "clm02_billed_charge": 18400.00,
+    "leased_ppo_repriced": 9200.00
+  }
+}`,
+        rows: [
+          ["Provider Billed Charge (837 CLM02)", "$18,400.00", false],
+          ["Leased PPO 'Discounted' Rate (391% of Medicare)", "$9,200.00", false],
+          ["Payer TiC MRF Local ASC Median", "$3,100.00", false],
+          ["Hospital 2026 EDI 835 Attested 10th-Pct Floor", "$4,150.00", true],
+          ["100% CMS OPPS Medicare Baseline", "$2,350.00", false]
+        ],
+        verdict: "ACTION: PEND_PRE_PAY_EDIT — Leased PPO rate exceeds 220% Medicare gate. Override to Hospital 835 Floor saves $5,050.00 before check run."
+      },
+      {
+        manifest: `{
+  "ain": "AIN-2026-HC-OON-SAFEHARBOR",
+  "assurance_rung": "03_AUDITED",
+  "network_egress": "DENY_ALL_WAN_0.0.0.0/0",
+  "x12_claim_input": {
+    "loop_2010AA_npi": "1821098765 (Out-of-Network Medical Ctr)",
+    "loop_2300_hi_drg": "MS-DRG 470 (Major Hip/Knee Replacement)",
+    "clm02_billed_charge": 64000.00,
+    "network_status": "OUT_OF_NETWORK / RBP"
+  }
+}`,
+        rows: [
+          ["Out-of-Network Billed Charge (837I)", "$64,000.00", false],
+          ["Legacy 80th-Percentile Billed UCR", "$49,800.00", false],
+          ["Market-Cleared 80th-Pct MRF Allowed UCR", "$23,400.00", false],
+          ["Hospital 2026 EDI 835 10th-Pct Safe-Harbor Floor", "$18,560.00", true],
+          ["100% CMS IPPS Medicare Baseline", "$12,800.00", false]
+        ],
+        verdict: "ACTION: STAMP_SAFE_HARBOR_835 ($18,560.00 / 145% Medicare) — Saves $45,440.00 vs Billed with $0 third-party contingency fee."
+      },
+      {
+        manifest: `{
+  "ain": "AIN-2026-HC-LIEN-AUDITOR",
+  "assurance_rung": "03_AUDITED",
+  "snapshot_sha256": "CMS_9882F_2026Q4_VERIFIED",
+  "ub04_lien_input": {
+    "facility_type2_npi": "1659321098 (Level 1 Trauma Center)",
+    "procedure_cluster": "ER Level 5 + CT + Tibia ORIF Surgery",
+    "statutory_lien_demand": 68500.00
+  }
+}`,
+        rows: [
+          ["Hospital Statutory Lien Demand (Chargemaster)", "$68,500.00", false],
+          ["Payer TiC In-Network MRF Market Median", "$19,400.00", false],
+          ["Hospital CEO-Attested EDI 835 Median Allowed", "$17,800.00", false],
+          ["Hospital CEO-Attested EDI 835 10th-Pct Floor", "$13,200.00", true],
+          ["CMS Medicare / HCRIS Cost-to-Charge Floor", "$10,800.00", false]
+        ],
+        verdict: "EVIDENTIARY VERDICT: Statutory lien is 534% of Medicare and 385% above Hospital's own attested 835 median. Defensible reduction: -$50,700.00."
+      }
+    ];
+
+    function loadScenario(idx, btn) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      const s = SCENARIOS[idx];
+      document.getElementById('manifest-box').textContent = s.manifest;
+      const html = s.rows.map(r => `
+        <div class="bench-row ${r[2] ? 'highlight' : ''}">
+          <span>${r[0]}</span>
+          <span class="mono">${r[1]}</span>
+        </div>
+      `).join('') + `
+        <div class="mono" style="margin-top:0.9rem; padding:0.75rem; background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.35); border-radius:4px; font-size:0.76rem; color:#34d399;">
+          ${s.verdict}
+        </div>
+      `;
+      document.getElementById('benchmark-output').innerHTML = html;
+    }
+    loadScenario(0);
+  </script>
+</body>
+</html>
