@@ -484,11 +484,26 @@
     </div>
   </section>
 
+
+  <!-- CORE PRIMITIVES -->
+  <section id="core-primitives">
+    <div class="wrap">
+      <div class="sec-head reveal"><span class="label">Core Primitives</span><h2>Four building blocks for verifiable AI agents.</h2><p>Agent identity, declared permissions, runtime enforcement, and scoped credential issuance work together to establish a verifiable trust boundary.</p></div>
+      <div class="cards" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px">
+        <div class="card reveal"><h3>AIN</h3><p>The Agent Identification Number ties a verifiable agent to its issuing authority, provenance, and accountable operator.</p></div>
+        <div class="card reveal"><h3>Capability Manifest</h3><p>A signed, machine-readable declaration of the tools, endpoints, scopes, and resources the agent is permitted to use.</p></div>
+        <div class="card reveal"><h3>Runtime Sandbox</h3><p>An execution boundary designed to enforce declared capabilities and record attempted violations for review.</p></div>
+        <div class="card reveal"><h3>Credential Root</h3><p>Short-lived, narrowly scoped credentials issued against verified identity and approved manifest permissions.</p></div>
+      </div>
+    </div>
+  </section>
+  <style>@media(max-width:950px){#core-primitives .cards{grid-template-columns:repeat(2,minmax(0,1fr))!important}}@media(max-width:560px){#core-primitives .cards{grid-template-columns:1fr!important}}</style>
+
   <!-- TRUST LADDER -->
   <section id="ladder">
     <div class="wrap">
       <div class="sec-head reveal">
-        <span class="label">The trust ladder</span>
+        <span class="label">Assurance Rungs</span>
         <h2>Identity is the base. Some receivers will want more, and can pay for more.</h2>
         <p>The base AIN certifies who stands behind an agent and that its history is intact. It doesn't claim the agent has been inspected. That deeper assurance is a separate rung, kept deliberately distinct so a receiver can always tell which one they're looking at.</p>
       </div>
@@ -636,7 +651,7 @@
 <section class="mk-hc-section" id="healthcare-vertical">
   <div class="mk-hc-eyebrow">
     <span>First Production Vertical</span>
-    <span class="mk-hc-badge">AIN Rung 03 Concept</span>
+    <span class="mk-hc-badge">AIN Rung 03 Audited</span>
     <span class="mk-hc-badge">CMS-9882-F &amp; EDI 837/835</span>
   </div>
 
