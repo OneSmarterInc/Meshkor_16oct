@@ -256,6 +256,7 @@
       <a href="receivers.html">Receivers</a>
       <a href="how-it-works.html">How it works</a>
       <a href="programme.html">Programme</a>
+      <a href="/healthcare/" style="color:#5fd18b">Healthcare <span style="font-size:10px">Rung 03</span></a>
       <a class="btn btn-primary" href="#waitlist">Join the waitlist</a>
     </nav>
   </div>
@@ -522,6 +523,167 @@
       <p class="gap-body reveal">Orchestration frameworks coordinate the agents you built. Development-security tools govern what your coding agents do inside your pipeline. Self-improving harnesses make a single agent better over time. Each of them governs agents inside its own trust boundary — and that's exactly the boundary MeshKor works across. An agent that changes month to month is precisely the one a receiver would most want a verifiable pedigree for. That cross-boundary trust is an open lane, and it's the one we're building in.</p>
     </div>
   </section>
+
+<!-- ================= MESHKOR HEALTHCARE VERTICAL TEASER ================= -->
+<style>
+  .mk-hc-section {
+    max-width: 1120px;
+    margin: 4rem auto;
+    padding: 2.5rem;
+    background: linear-gradient(180deg, rgba(16, 185, 129, 0.04) 0%, rgba(15, 19, 26, 0.85) 100%);
+    border: 1px solid rgba(16, 185, 129, 0.28);
+    border-radius: 8px;
+    color: #f0f4f8;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+  .mk-hc-eyebrow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #10b981;
+  }
+  .mk-hc-badge {
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.35);
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    color: #34d399;
+  }
+  .mk-hc-title {
+    font-size: clamp(1.6rem, 3vw, 2.25rem);
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+    margin: 0 0 1rem 0;
+    color: #ffffff;
+  }
+  .mk-hc-lead {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: #9ba3b0;
+    max-width: 820px;
+    margin: 0 0 2rem 0;
+  }
+  .mk-hc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+  .mk-hc-card {
+    background: rgba(10, 12, 16, 0.85);
+    border: 1px solid #1f2735;
+    border-radius: 6px;
+    padding: 1.35rem;
+  }
+  .mk-hc-card-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: #10b981;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+  .mk-hc-card h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    color: #f0f4f8;
+  }
+  .mk-hc-card p {
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: #9ba3b0;
+    margin: 0;
+  }
+  .mk-hc-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #1f2735;
+  }
+  .mk-hc-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: #646e7e;
+  }
+  .mk-hc-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #10b981;
+    color: #06130e;
+    font-weight: 600;
+    font-size: 0.875rem;
+    padding: 0.65rem 1.25rem;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background 0.15s ease;
+  }
+  .mk-hc-btn:hover {
+    background: #34d399;
+  }
+</style>
+
+<section class="mk-hc-section" id="healthcare-vertical">
+  <div class="mk-hc-eyebrow">
+    <span>First Production Vertical</span>
+    <span class="mk-hc-badge">AIN Rung 03 Concept</span>
+    <span class="mk-hc-badge">CMS-9882-F &amp; EDI 837/835</span>
+  </div>
+
+  <h2 class="mk-hc-title">
+    Where the blast radius matters most: Healthcare claims and price transparency.
+  </h2>
+
+  <p class="mk-hc-lead">
+    Healthcare runs on a stalemate. Third-party administrators, self-funded health plans, and litigation teams sit on petabytes of federal Machine-Readable Files (CMS-9882-F), Hospital EDI 835 remittance disclosures, and live <code>837</code> claims. Everybody wants autonomous agents to reprice out-of-network bills, catch NCCI coding errors, and audit medical liens before money moves. Nobody can let an unverified cloud bot touch Protected Health Information or override a network contract.
+  </p>
+
+  <div class="mk-hc-grid">
+    <div class="mk-hc-card">
+      <span class="mk-hc-card-tag">01 // SEALED ZERO-EGRESS MANIFEST</span>
+      <h3>Your claims never leave your walls</h3>
+      <p>
+        MeshKor deploys Rung 03 Audited pricing and coding agents inside your VPC or on-premise appliance. The sealed capability manifest permits local <code>837</code>/<code>835</code> reads and local MRF/CMS DuckDB lookups, and is designed to deny outbound WAN sockets (<code>0.0.0.0/0</code>).
+      </p>
+    </div>
+
+    <div class="mk-hc-card">
+      <span class="mk-hc-card-tag">02 // TAMPER-EVIDENT PRICING PEDIGREE</span>
+      <h3>Federal MRF + 835 floor verification</h3>
+      <p>
+        Every repriced claim line, No Surprises Act QPA median, and personal injury hospital lien valuation is stamped with the agent's <code>AIN</code> and the SHA-256 hash of the quarterly CMS Medicare, Hospital 835 10th-percentile, and Payer TiC MRF snapshot.
+      </p>
+    </div>
+
+    <div class="mk-hc-card">
+      <span class="mk-hc-card-tag">03 // FLAT INFRASTRUCTURE, NOT CONTINGENCY TAXES</span>
+      <h3>Replace 25%-of-savings repricers</h3>
+      <p>
+        Legacy payment-integrity vendors export your claims to their cloud and take 25% to 35% of phantom chargemaster savings. A MeshKor-certified appliance runs inside your perimeter for a flat subscription.
+      </p>
+    </div>
+  </div>
+
+  <div class="mk-hc-footer">
+    <div class="mk-hc-meta">
+      RUNTIME: Google Cloud Confidential VMs (us-east5) · AlloyDB / DuckDB · Vertex AI &amp; Air-Gapped Local GPU
+    </div>
+    <a href="/healthcare/" class="mk-hc-btn">
+      Explore MeshKor for Healthcare &rarr;
+    </a>
+  </div>
+</section>
+<!-- ================= END MESHKOR HEALTHCARE TEASER ================= -->
 
   <!-- WAITLIST -->
   <section class="cta" id="waitlist">
